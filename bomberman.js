@@ -1,5 +1,7 @@
 function Game(){
+  
   return {
+
   }
 }
 
@@ -20,4 +22,38 @@ function Bomb( options ){
   return {
     id: getID()
   }
+}
+
+
+// document.onkeypress = function(myEvent) { console.log(myEvent.keyCode); };
+//utilities
+function getKey(e){
+	var buttonCode = e.which || e.keyCode;
+	switch (buttonCode) {
+		case 38,119:
+			button = 'up'
+			e.preventDefault()
+			break
+		case 40,115:
+			button = 'down'
+       		e.preventDefault();
+			break
+		case 37,97:
+			button = 'left'
+       		e.preventDefault();
+			break
+		case 39,100:
+			button = 'right'
+       		e.preventDefault();
+			break
+		case 32: 
+			button = 'space'
+       		e.preventDefault();
+			break
+		case 13:
+			button = 'enter'
+       		e.preventDefault();
+			break
+	}
+	return button
 }
