@@ -26,7 +26,7 @@ function Game(){
 	load = function(){
 		console.log("loading...")
 		textures = new Image();
-		textures.src = "images/sprite.png";
+		textures.src = "images/bomberman_sprites.png";
 		textures.addEventListener("load", init, false);
 
 	}
@@ -43,8 +43,8 @@ function Game(){
 	gameLoop = function(){
 		console.log("looping!")
 		if(isPlaying){
-			/* This is probably gobbling up memory over time. 
-			Will possibly casue a stack overflow or memory full runtime error over a 
+			/* This is probably gobbling up memory over time.
+			Will possibly casue a stack overflow or memory full runtime error over a
 			long period of time.  There MUST be a better way to do this! */
 			requestAnimFrame(gameLoop)
 		}
@@ -52,7 +52,7 @@ function Game(){
 
 
 
-  
+
 	return {
 		load:load,
 		stop:stop
@@ -100,7 +100,7 @@ function getKey(e){
 			button = 'right'
        		e.preventDefault();
 			break
-		case 32: 
+		case 32:
 			button = 'space'
        		e.preventDefault();
 			break
