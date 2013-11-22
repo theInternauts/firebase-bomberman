@@ -1,8 +1,62 @@
 function Game(){
-  
-  return {
 
-  }
+	var stage, ctxStage, actors, ctxActors, gameWidth, gameHeight, isPlaying, textures
+	var players = []
+	var requestAnimFrame =  window.requestAnimationFrame ||
+                        window.webkitRequestAnimationFrame ||
+                        window.mozRequestAnimationFrame ||
+                        window.oRequestAnimationFrame ||
+                        window.msRequestAnimationFrame ||
+                        function(callback) {
+                            window.setTimeout(callback, 1000 / 60);
+                        }
+
+	init = function(){
+		console.log("initializing...")
+		stage = document.getElementById("mainBG")
+		ctxStage = stage.getContext("2d")
+		actors = document.getElementById("actors")
+		ctxActors = actors.getContext("2d")
+		gameWidth = stage.width
+		gameHeight = stage.height
+		isPlaying = false
+		start()
+	}
+
+	load = function(){
+		console.log("loading...")
+		textures = new Image();
+		textures.src = "images/sprite.png";
+		textures.addEventListener("load", init, false);
+
+	}
+
+	start = function(){
+		console.log("starting...")
+	    ctxStage.drawImage(textures, 0, 0, gameWidth, gameHeight, 0, 0, gameWidth, gameHeight)
+	    isPlaying = true;
+	    requestAnimFrame(gameLoop);
+	}
+
+	stop = function(){ isPlaying = false }
+
+	gameLoop = function(){
+		console.log("looping!")
+		if(isPlaying){
+			/* This is probably gobbling up memory over time. 
+			Will possibly casue a stack overflow or memory full runtime error over a 
+			long period of time.  There MUST be a better way to do this! */
+			requestAnimFrame(gameLoop)
+		}
+	}
+
+
+
+  
+	return {
+		load:load,
+		stop:stop
+	}
 }
 
 function Player( options ){

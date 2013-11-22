@@ -1,4 +1,4 @@
-firebase-bomberman
+#firebase-bomberman
 ==================
 
 This is a personal exercise to build a working, multiplayer, clone of Super Bomberman for use on accerometer-enabled mobile devices.

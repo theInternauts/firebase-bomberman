@@ -1,0 +1,4 @@
+body { background-color: #444; width: 100%; height: 100%;}
+
+canvas { display: block; background-color: transparent; }
+.layer { position: relative; top: -600px;}

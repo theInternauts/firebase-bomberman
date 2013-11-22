@@ -1,10 +1,15 @@
 <html>
 <head>
 	<title>Bomberman vs. Firebase</title>
-  <script type="text/javascript" src="bomberman.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="bomberman.js"></script>
 </head>
 <body>
-	<canvas width="500" height="500"></canvas>
-	<p>Bomberman</p>
+	<canvas id="mainBG" width="800" height="600"></canvas>
+	<canvas id="actors" class="layer" width="800" height="600"></canvas>
+	<script type="text/javascript">
+		var bomberman = new Game()
+		bomberman.load()
+	</script>
 </body>
 </html>
