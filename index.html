@@ -5,11 +5,15 @@
 	<script type="text/javascript" src="bomberman.js"></script>
 </head>
 <body>
-	<canvas id="mainBG" width="800" height="600"></canvas>
-	<canvas id="actors" class="layer" width="800" height="600"></canvas>
+  <a id="load">LOAD()</a> | <a id="stop">STOP()</a>
+  <canvas id="mainBG" width="800" height="600"></canvas>
+  <canvas id="actors" class="layer" width="800" height="600"></canvas>
 	<script type="text/javascript">
 		var bomberman = new Game()
 		bomberman.load()
+    document.getElementById('load').addEventListener('click',bomberman.load,false)
+    document.getElementById('stop').addEventListener('click',bomberman.stop,false)
+
 	</script>
 </body>
 </html>
