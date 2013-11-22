@@ -20,6 +20,7 @@ function Game(){
 		gameWidth = stage.width
 		gameHeight = stage.height
 		isPlaying = false
+    players.push(new Player({id:"White Bomberman"}))
 		start()
 	}
 
@@ -46,35 +47,74 @@ function Game(){
 			/* This is probably gobbling up memory over time.
 			Will possibly casue a stack overflow or memory full runtime error over a
 			long period of time.  There MUST be a better way to do this! */
+      // clearCtx(ctxActors)
+      drawAllPlayers(ctxActors)
 			requestAnimFrame(gameLoop)
 		}
 	}
 
-
+  drawAllPlayers = function(ctx){
+    player1 = players[0]
+    ctxActors.drawImage(textures, player1.config().srcX, player1.config().srcY, player1.config().width, player1.config().height, 82, 37, player1.config().width, player1.config().height)
+  }
 
 
 	return {
 		load:load,
-		stop:stop
+		stop:stop,
+    playerCount: function(){ return players.count }
 	}
 }
 
 function Player( options ){
+  if(!options){ options = {} }
+  var id = options.id || Date.now()
+  var srcX = 0;
+  var srcY = 600;
+  var width = 35;
+  var height = 54;
+  var drawX = 400;
+  var drawY = 300;
+  var centerX = drawX + (width / 2);
+  var centerY = drawY + (height / 2);
 
-  return {  }
+  getID = function(){ return id }
+  config = function(){
+    return {
+      srcX: srcX,
+      srcY: srcY,
+      width: width,
+      height: height
+    }
+  }
+
+  position = function(){
+    return {
+      drawX: drawX,
+      drawY: drawY,
+      centerX: centerX,
+      centerY: centerY
+    }
+  }
+
+  return {
+    id:getID,
+    config:config,
+    position:position
+  }
 }
 
 function Bomb( options ){
   if(!options){ options = {} }
-  this.blastRadius = options.blastRadius || 3
-  this.timer = options.timer || 3
-  this.id = options.id || Date.now()
-  getTimer = function(){ return this.timer }
-  getBlastRadius = function(){ return this.blastRadius }
-  getID = function(){ return this.id }
+  var blastRadius = options.blastRadius || 3
+  var timer = options.timer || 3
+  var id = options.id || Date.now()
+  getTimer = function(){ return timer }
+  getBlastRadius = function(){ return blastRadius }
+  getID = function(){ return id }
 
   return {
-    id: getID()
+    id: getID
   }
 }
 
