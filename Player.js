@@ -13,7 +13,8 @@ function Player( options ){
   var isRightBtn = false
   var isDownBtn = false
   var isLeftBtn = false
-  var isSpacebar = false
+  var isSpacebarBtn = false
+  var speed = 9
 
   getID = function(){ return id }
   getConfig = function(){
@@ -48,9 +49,21 @@ function Player( options ){
       case 'isRightBtn':
         isRightBtn = value
         break
-      case 'isSpacebar':
-        isSpacebar  = value
+      case 'isSpacebarBtn':
+        isSpacebarBtn  = value
         break
+    }
+  }
+
+  update = function(){
+    if (isUpBtn){
+      drawY -= speed
+    } else if (isRightBtn){
+      drawX += speed
+    } else if (isDownBtn){
+      drawY += speed
+    } else if (isLeftBtn){
+      drawX -= speed
     }
   }
 
@@ -58,6 +71,7 @@ function Player( options ){
     id:getID,
     getConfig:getConfig,
     getPosition:getPosition,
-    setButton:setButton
+    setButton:setButton,
+    update:update
   }
 }

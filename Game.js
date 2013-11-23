@@ -1,5 +1,4 @@
 function Game(){
-
   var stage, ctxStage, actors, ctxActors, gameWidth, gameHeight, isPlaying, textures, localUser
   var players = []
   var requestAnimFrame =  window.requestAnimationFrame ||
@@ -58,34 +57,38 @@ function Game(){
 
   drawAllPlayers = function(ctx){
     player1 = players[0]
-    ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, 82, 37, player1.getConfig().width, player1.getConfig().height)
+    player1.update()
+    ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, player1.getPosition().drawX, player1.getPosition().drawY, player1.getConfig().width, player1.getConfig().height)
   }
-
-
 
   setKeyFlags = function(e, value){
     var buttonCode = e.which || e.keyCode;
     var button = ""
     switch (buttonCode) {
       case 38,119,87:
-        button = 'up'
         e.preventDefault()
+        button = 'up'
+        localUser.setButton('isUpBtn', value)
         break
       case 40,115,83:
-        button = 'down'
         e.preventDefault();
+        button = 'down'
+        localUser.setButton('isDownBtn', value)
         break
       case 37,97,65:
-        button = 'left'
         e.preventDefault();
+        button = 'left'
+        localUser.setButton('isLeftBtn', value)
         break
       case 39,100,68:
         button = 'right'
         e.preventDefault();
+        localUser.setButton('isRightBtn', value)
         break
       case 32:
         button = 'space'
         e.preventDefault();
+        localUser.setButton('isSpacebarBtn', value)
         break
       case 13:
         button = 'enter'
