@@ -21,6 +21,8 @@ function Game(){
 		gameHeight = stage.height
 		isPlaying = false
     players.push(new Player({id:"White Bomberman"}))
+    document.addEventListener("keydown", function(e) {setKeyFlags(e, true);}, false);
+    document.addEventListener("keyup", function(e) {setKeyFlags(e, false);}, false);
 		start()
 	}
 
@@ -59,6 +61,40 @@ function Game(){
   }
 
 
+
+  setKeyFlags = function(e, value){
+    var buttonCode = e.which || e.keyCode;
+    var button = ""
+    switch (buttonCode) {
+      case 38,119,87:
+        button = 'up'
+        e.preventDefault()
+        break
+      case 40,115,83:
+        button = 'down'
+        e.preventDefault();
+        break
+      case 37,97,65:
+        button = 'left'
+        e.preventDefault();
+        break
+      case 39,100,68:
+        button = 'right'
+        e.preventDefault();
+        break
+      case 32:
+        button = 'space'
+        e.preventDefault();
+        break
+      case 13:
+        button = 'enter'
+        e.preventDefault();
+        break
+    }
+    console.log(buttonCode+": ", button)
+  }
+
+
 	return {
 		load:load,
 		stop:stop,
@@ -77,6 +113,10 @@ function Player( options ){
   var drawY = 300;
   var centerX = drawX + (width / 2);
   var centerY = drawY + (height / 2);
+  var isUpBtn = false
+  var isRightBtn = false
+  var isDownBtn = false
+  var isLeftBtn = false
 
   getID = function(){ return id }
   config = function(){
@@ -97,6 +137,7 @@ function Player( options ){
     }
   }
 
+
   return {
     id:getID,
     config:config,
@@ -116,38 +157,4 @@ function Bomb( options ){
   return {
     id: getID
   }
-}
-
-
-// document.onkeypress = function(myEvent) { console.log(myEvent.keyCode); };
-//utilities
-function getKey(e){
-	var buttonCode = e.which || e.keyCode;
-	switch (buttonCode) {
-		case 38,119:
-			button = 'up'
-			e.preventDefault()
-			break
-		case 40,115:
-			button = 'down'
-       		e.preventDefault();
-			break
-		case 37,97:
-			button = 'left'
-       		e.preventDefault();
-			break
-		case 39,100:
-			button = 'right'
-       		e.preventDefault();
-			break
-		case 32:
-			button = 'space'
-       		e.preventDefault();
-			break
-		case 13:
-			button = 'enter'
-       		e.preventDefault();
-			break
-	}
-	return button
 }
