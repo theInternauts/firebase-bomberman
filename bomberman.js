@@ -58,7 +58,7 @@ function Game(){
 
   drawAllPlayers = function(ctx){
     player1 = players[0]
-    ctxActors.drawImage(textures, player1.config().srcX, player1.config().srcY, player1.config().width, player1.config().height, 82, 37, player1.config().width, player1.config().height)
+    ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, 82, 37, player1.getConfig().width, player1.getConfig().height)
   }
 
 
@@ -121,7 +121,7 @@ function Player( options ){
   var isSpacebar = false
 
   getID = function(){ return id }
-  config = function(){
+  getConfig = function(){
     return {
       srcX: srcX,
       srcY: srcY,
@@ -130,7 +130,7 @@ function Player( options ){
     }
   }
 
-  position = function(){
+  getPosition = function(){
     return {
       drawX: drawX,
       drawY: drawY,
@@ -161,8 +161,8 @@ function Player( options ){
 
   return {
     id:getID,
-    config:config,
-    position:position,
+    getConfig:getConfig,
+    getPosition:getPosition,
     setButton:setButton
   }
 }
