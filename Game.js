@@ -10,6 +10,9 @@ function Game(){
                         function(callback) {
                             window.setTimeout(callback, 1000 / 60);
                         }
+  var bombacache = {}
+
+  getBombs = function(){ return bombacache }
 
   init = function(){
     console.log("initializing...")
@@ -56,6 +59,7 @@ function Game(){
       Will possibly casue a stack overflow or memory full runtime error over a
       long period of time.  There MUST be a better way to do this! */
       clearCtx(ctxActors)
+      drawAllBombs(ctxActors)
       drawAllPlayers(ctxActors)
       requestAnimFrame(gameLoop)
     }
@@ -65,6 +69,13 @@ function Game(){
     player1 = players[0]
     player1.update()
     ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, player1.getPosition().drawX, player1.getPosition().drawY, player1.getConfig().width, player1.getConfig().height)
+  }
+
+  drawAllBombs = function(ctx){
+    for (i in bombacache){
+      console.log('counter')
+      ctx.drawImage(textures, bombacache[i].getConfig().srcX, bombacache[i].getConfig().srcY, bombacache[i].getConfig().width, bombacache[i].getConfig().height, bombacache[i].getPosition().drawX, bombacache[i].getPosition().drawY, bombacache[i].getConfig().width, bombacache[i].getConfig().height)
+    }
   }
 
   function clearCtx(ctx) {
@@ -99,6 +110,17 @@ function Game(){
         button = 'space'
         e.preventDefault();
         localUser.setButton('isSpacebarBtn', value)
+        //this logic is in a bad bad place.  it's buggy/laggey here.  bombs aren't made until the spacebar is held for a few cycles
+        if (value){ 
+          console.log("value: ", value)
+          var response = localUser.setBomb();
+          if(response){
+            console.log('response: ', response)
+            bomb = new Bomb(response)
+            console.log('new bomb: ', bomb)
+            bombacache[bomb.id()] = bomb
+          }
+        }
         break
       case 13:
         button = 'enter'
@@ -112,6 +134,7 @@ function Game(){
   return {
     load:load,
     stop:stop,
-    playerCount: function(){ return players.count }
+    playerCount: function(){ return players.count },
+    getBombs:getBombs
   }
 }

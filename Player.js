@@ -16,7 +16,7 @@ function Player( options ){
   var isSpacebarBtn = false
   var speed = 9
   var maxBombs = 5
-  var bombSatchel = 0
+  var bombCount = 0
 
   getID = function(){ return id }
   getConfig = function(){
@@ -58,8 +58,15 @@ function Player( options ){
   }
 
   setBomb = function(){
-    if(bombSatchel.length <= maxBombs){
-
+    if(bombCount < maxBombs){
+      bombCount += 1
+      return { 
+        drawX: drawX, 
+        drawY: drawY 
+      }
+    }
+    else{
+      return false
     }
   }
 
