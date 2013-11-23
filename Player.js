@@ -58,12 +58,16 @@ function Player( options ){
   update = function(){
     if (isUpBtn){
       drawY -= speed
+      centerY = drawY + (height / 2)
     } else if (isRightBtn){
       drawX += speed
+      centerX = drawX + (width / 2)
     } else if (isDownBtn){
       drawY += speed
+      centerY = drawY + (height / 2)
     } else if (isLeftBtn){
       drawX -= speed
+      centerX = drawX + (width / 2)
     }
   }
 
