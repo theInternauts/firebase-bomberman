@@ -1,14 +1,14 @@
 function Player( options ){
   if(!options){ options = {} }
   var id = options.id || Date.now()
-  var srcX = 0;
-  var srcY = 600;
-  var width = 35;
-  var height = 54;
-  var drawX = 400;
-  var drawY = 300;
-  var centerX = drawX + (width / 2);
-  var centerY = drawY + (height / 2);
+  var srcX = 0
+  var srcY = 600
+  var width = 35
+  var height = 54
+  var drawX = options.drawX || 400
+  var drawY = options.drawY || 300
+  var centerX = drawX + (width / 2)
+  var centerY = drawY + (height / 2)
   var isUpBtn = false
   var isRightBtn = false
   var isDownBtn = false

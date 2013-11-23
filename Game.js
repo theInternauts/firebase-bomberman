@@ -1,4 +1,5 @@
 function Game(){
+  var startPositions = { player1: {x:83,y:39}, player2: {x:680,y:510}, player3: {x:680,y:39}, player4: {x:83,y:510} }
   var stage, ctxStage, actors, ctxActors, gameWidth, gameHeight, isPlaying, textures, localUser
   var players = []
   var requestAnimFrame =  window.requestAnimationFrame ||
@@ -19,7 +20,10 @@ function Game(){
     gameWidth = stage.width
     gameHeight = stage.height
     isPlaying = false
-    localUser = new Player({id:"White Bomberman"})
+    var options = {id:"White Bomberman"}
+    options.drawX = startPositions.player1.x
+    options.drawY = startPositions.player1.y
+    localUser = new Player(options)
     players.push(localUser)
     document.addEventListener("keydown", function(e) {setKeyFlags(e, true);}, false);
     document.addEventListener("keyup", function(e) {setKeyFlags(e, false);}, false);
