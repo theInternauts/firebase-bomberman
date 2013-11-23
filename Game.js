@@ -49,7 +49,7 @@ function Game(){
       /* This is probably gobbling up memory over time.
       Will possibly casue a stack overflow or memory full runtime error over a
       long period of time.  There MUST be a better way to do this! */
-      // clearCtx(ctxActors)
+      clearCtx(ctxActors)
       drawAllPlayers(ctxActors)
       requestAnimFrame(gameLoop)
     }
@@ -59,6 +59,10 @@ function Game(){
     player1 = players[0]
     player1.update()
     ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, player1.getPosition().drawX, player1.getPosition().drawY, player1.getConfig().width, player1.getConfig().height)
+  }
+
+  function clearCtx(ctx) {
+    ctx.clearRect(0, 0, gameWidth, gameHeight);
   }
 
   setKeyFlags = function(e, value){
