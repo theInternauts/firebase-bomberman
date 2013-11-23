@@ -45,7 +45,9 @@ function Game(){
       requestAnimFrame(gameLoop);
   }
 
-  stop = function(){ isPlaying = false }
+  stop = function(){
+    isPlaying = false
+  }
 
   gameLoop = function(){
     console.log("looping!")
