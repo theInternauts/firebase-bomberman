@@ -1,6 +1,6 @@
 function Game(){
 
-	var stage, ctxStage, actors, ctxActors, gameWidth, gameHeight, isPlaying, textures
+	var stage, ctxStage, actors, ctxActors, gameWidth, gameHeight, isPlaying, textures, localUser
 	var players = []
 	var requestAnimFrame =  window.requestAnimationFrame ||
                         window.webkitRequestAnimationFrame ||
@@ -20,7 +20,8 @@ function Game(){
 		gameWidth = stage.width
 		gameHeight = stage.height
 		isPlaying = false
-    players.push(new Player({id:"White Bomberman"}))
+    localUser = new Player({id:"White Bomberman"})
+    players.push(localUser)
     document.addEventListener("keydown", function(e) {setKeyFlags(e, true);}, false);
     document.addEventListener("keyup", function(e) {setKeyFlags(e, false);}, false);
 		start()
@@ -117,6 +118,7 @@ function Player( options ){
   var isRightBtn = false
   var isDownBtn = false
   var isLeftBtn = false
+  var isSpacebar = false
 
   getID = function(){ return id }
   config = function(){
@@ -137,11 +139,31 @@ function Player( options ){
     }
   }
 
+  setButton = function(key, value){
+    switch (key) {
+      case 'isUpBtn':
+        isUpBtn = value
+        break
+      case 'isLeftBtn':
+        isLeftBtn = value
+        break
+      case 'isDownBtn':
+        isDownBtn = value
+        break
+      case 'isRightBtn':
+        isRightBtn = value
+        break
+      case 'isSpacebar':
+        isSpacebar  = value
+        break
+    }
+  }
 
   return {
     id:getID,
     config:config,
-    position:position
+    position:position,
+    setButton:setButton
   }
 }
 
