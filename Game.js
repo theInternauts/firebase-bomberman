@@ -73,7 +73,6 @@ function Game(){
 
   drawAllBombs = function(ctx){
     for (i in bombacache){
-      console.log('counter')
       ctx.drawImage(textures, bombacache[i].getConfig().srcX, bombacache[i].getConfig().srcY, bombacache[i].getConfig().width, bombacache[i].getConfig().height, bombacache[i].getPosition().drawX, bombacache[i].getPosition().drawY, bombacache[i].getConfig().width, bombacache[i].getConfig().height)
     }
   }
@@ -111,13 +110,10 @@ function Game(){
         e.preventDefault();
         localUser.setButton('isSpacebarBtn', value)
         //this logic is in a bad bad place.  it's buggy/laggey here.  bombs aren't made until the spacebar is held for a few cycles
-        if (value){ 
-          console.log("value: ", value)
+        if (value){
           var response = localUser.setBomb();
           if(response){
-            console.log('response: ', response)
             bomb = new Bomb(response)
-            console.log('new bomb: ', bomb)
             bombacache[bomb.id()] = bomb
           }
         }
@@ -127,7 +123,7 @@ function Game(){
         e.preventDefault();
         break
     }
-    console.log(buttonCode+": ", button)
+    // console.log(buttonCode+": ", button)
   }
 
 
