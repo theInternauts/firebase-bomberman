@@ -30,6 +30,7 @@ function Game(){
     players.push(localUser)
     document.addEventListener("keydown", function(e) {setKeyFlags(e, true);}, false);
     document.addEventListener("keyup", function(e) {setKeyFlags(e, false);}, false);
+    buildStagePillars()
     start()
   }
 
@@ -63,6 +64,21 @@ function Game(){
       drawAllPlayers(ctxActors)
       requestAnimFrame(gameLoop)
     }
+  }
+
+  outOfBounds = function(actor, proposedDrawX, proposedDrawY){
+      var newBottomY = proposedDrawY + actor.height,
+          newTopY = proposedDrawY,
+          newRightX = proposedDrawX + actor.width,
+          newLeftX = proposedDrawX,
+          treeLineTop = 5,
+          treeLineBottom = 570,
+          treeLineRight = 750,
+          treeLineLeft = 65;
+      return newBottomY > treeLineBottom ||
+          newTopY < treeLineTop ||
+          newRightX > treeLineRight ||
+          newLeftX < treeLineLeft;
   }
 
   drawAllPlayers = function(ctx){
