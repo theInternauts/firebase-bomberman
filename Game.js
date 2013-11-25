@@ -30,7 +30,7 @@ function Game(){
     players.push(localUser)
     document.addEventListener("keydown", function(e) {setKeyFlags(e, true);}, false);
     document.addEventListener("keyup", function(e) {setKeyFlags(e, false);}, false);
-    buildStagePillars()
+    // buildStagePillars()
     start()
   }
 
@@ -91,6 +91,36 @@ function Game(){
     for (i in bombacache){
       ctx.drawImage(textures, bombacache[i].getConfig().srcX, bombacache[i].getConfig().srcY, bombacache[i].getConfig().width, bombacache[i].getConfig().height, bombacache[i].getPosition().drawX, bombacache[i].getPosition().drawY, bombacache[i].getConfig().width, bombacache[i].getConfig().height)
     }
+  }
+
+  buildStagePillars = function(){
+    var pillarWidth = 60
+    var offsetX = 70
+    var offsetY = 29
+    return [
+              new Pillar(offsetX + 60, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 60, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 60, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 60, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 420, pillarWidth, pillarWidth)
+
+
+           ]
   }
 
   function clearCtx(ctx) {
