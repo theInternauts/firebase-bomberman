@@ -1,4 +1,3 @@
-mulitplayerNode.js
 function MultiplayerNode(){
 	
 }
