@@ -14,7 +14,7 @@ function Player( options ){
   var isDownBtn = false
   var isLeftBtn = false
   var isSpacebarBtn = false
-  var speed = 9
+  var speed = 7
   var maxBombs = 5
   var bombCount = 0
 
@@ -34,6 +34,18 @@ function Player( options ){
       drawY: drawY,
       centerX: centerX,
       centerY: centerY
+    }
+  }
+
+  getVector = function(){
+    return {
+      drawX: drawX,
+      drawY: drawY,
+      speed: speed,
+      isUpBtn: isUpBtn,
+      isRightBtn: isRightBtn,
+      isDownBtn: isDownBtn,
+      isLeftBtn: isLeftBtn
     }
   }
 
@@ -60,9 +72,9 @@ function Player( options ){
   setBomb = function(){
     if(bombCount < maxBombs){
       bombCount += 1
-      return { 
-        drawX: drawX, 
-        drawY: drawY 
+      return {
+        drawX: drawX,
+        drawY: drawY
       }
     }
     else{
@@ -89,6 +101,7 @@ function Player( options ){
   return {
     id:getID,
     getConfig:getConfig,
+    getVector:getVector,
     getPosition:getPosition,
     setButton:setButton,
     update:update,

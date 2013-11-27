@@ -7,9 +7,14 @@ function Bomb( options ){
   var drawY = options.drawY
   var isActive = true
   var blastRadius = options.blastRadius || 3
-  var timer = options.timer || 3
+  var timer = options.timer || 3000
   var id = options.id || Date.now()
-  
+  var clock
+
+  beginCountdown = function(){
+    clock = setTimeout(detonate,timer);
+  }
+  detonate = function(){ console.log("BOOM!") }
   getTimer = function(){ return timer }
   getBlastRadius = function(){ return blastRadius }
   getID = function(){ return id }
@@ -24,7 +29,8 @@ function Bomb( options ){
       srcX:srcX,
       srcY:srcY,
       width:width,
-      height:height
+      height:height,
+      timer:timer
     }
   }
 
@@ -35,6 +41,7 @@ function Bomb( options ){
     }
   }
 
+  beginCountdown()
   return {
     id: getID,
     getTimer: getTimer,

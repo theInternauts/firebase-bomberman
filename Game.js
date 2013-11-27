@@ -30,6 +30,7 @@ function Game(){
     players.push(localUser)
     document.addEventListener("keydown", function(e) {setKeyFlags(e, true);}, false);
     document.addEventListener("keyup", function(e) {setKeyFlags(e, false);}, false);
+    // buildStagePillars()
     start()
   }
 
@@ -38,22 +39,22 @@ function Game(){
     textures = new Image();
     textures.src = "images/bomberman_sprites.png";
     textures.addEventListener("load", init, false);
-
   }
 
   start = function(){
     console.log("starting...")
-      ctxStage.drawImage(textures, 0, 0, gameWidth, gameHeight, 0, 0, gameWidth, gameHeight)
-      isPlaying = true;
-      requestAnimFrame(gameLoop);
+    ctxStage.drawImage(textures, 0, 0, gameWidth, gameHeight, 0, 0, gameWidth, gameHeight)
+    isPlaying = true;
+    requestAnimFrame(gameLoop);
   }
 
   stop = function(){
     isPlaying = false
+    console.log("stopping...")
   }
 
   gameLoop = function(){
-    console.log("looping!")
+    // console.log("looping!")
     if(isPlaying){
       /* This is probably gobbling up memory over time.
       Will possibly casue a stack overflow or memory full runtime error over a
@@ -65,17 +66,82 @@ function Game(){
     }
   }
 
+  isOutOfBounds = function(actor){
+        vector = actor.getVector(),
+        config = actor.getConfig(),
+        newTopY = vector.drawY,
+        newBottomY = vector.drawY + config.height,
+        newLeftX = vector.drawX,
+        newRightX = vector.drawX + config.width,
+        arenaTop = 5,
+        arenaBottom = 570,
+        arenaRight = 750,
+        arenaLeft = 65;
+    if (vector.isUpBtn){
+      newTopY -= vector.speed
+      newBottomY -= vector.speed
+    }
+    if (vector.isRightBtn){
+      newLeftX += vector.speed
+      newRightX += vector.speed
+    }
+    if (vector.isDownBtn){
+      newTopY += vector.speed
+      newBottomY += vector.speed
+    }
+    if (vector.isLeftBtn){
+      newLeftX -= vector.speed
+      newRightX -= vector.speed
+    }
+    return newBottomY > arenaBottom ||
+        newTopY < arenaTop ||
+        newRightX > arenaRight ||
+        newLeftX < arenaLeft;
+  }
+
   drawAllPlayers = function(ctx){
     player1 = players[0]
-    player1.update()
+    if (!isOutOfBounds(player1)) {
+      //possible race condition here
+      player1.update()
+    }
     ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, player1.getPosition().drawX, player1.getPosition().drawY, player1.getConfig().width, player1.getConfig().height)
   }
 
   drawAllBombs = function(ctx){
     for (i in bombacache){
-      console.log('counter')
       ctx.drawImage(textures, bombacache[i].getConfig().srcX, bombacache[i].getConfig().srcY, bombacache[i].getConfig().width, bombacache[i].getConfig().height, bombacache[i].getPosition().drawX, bombacache[i].getPosition().drawY, bombacache[i].getConfig().width, bombacache[i].getConfig().height)
     }
+  }
+
+  buildStagePillars = function(){
+    var pillarWidth = 60
+    var offsetX = 70
+    var offsetY = 29
+    return [
+              new Pillar(offsetX + 60, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 60, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 60, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 180, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 60, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 300, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 60, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 180, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 300, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 420, offsetY + 420, pillarWidth, pillarWidth),
+              new Pillar(offsetX + 600, offsetY + 420, pillarWidth, pillarWidth)
+
+
+           ]
   }
 
   function clearCtx(ctx) {
@@ -111,13 +177,10 @@ function Game(){
         e.preventDefault();
         localUser.setButton('isSpacebarBtn', value)
         //this logic is in a bad bad place.  it's buggy/laggey here.  bombs aren't made until the spacebar is held for a few cycles
-        if (value){ 
-          console.log("value: ", value)
+        if (value){
           var response = localUser.setBomb();
           if(response){
-            console.log('response: ', response)
             bomb = new Bomb(response)
-            console.log('new bomb: ', bomb)
             bombacache[bomb.id()] = bomb
           }
         }
@@ -126,8 +189,7 @@ function Game(){
         button = 'enter'
         e.preventDefault();
         break
-    }
-    console.log(buttonCode+": ", button)
+    }    
   }
 
 
