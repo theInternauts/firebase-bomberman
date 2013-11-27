@@ -39,22 +39,22 @@ function Game(){
     textures = new Image();
     textures.src = "images/bomberman_sprites.png";
     textures.addEventListener("load", init, false);
-
   }
 
   start = function(){
     console.log("starting...")
-      ctxStage.drawImage(textures, 0, 0, gameWidth, gameHeight, 0, 0, gameWidth, gameHeight)
-      isPlaying = true;
-      requestAnimFrame(gameLoop);
+    ctxStage.drawImage(textures, 0, 0, gameWidth, gameHeight, 0, 0, gameWidth, gameHeight)
+    isPlaying = true;
+    requestAnimFrame(gameLoop);
   }
 
   stop = function(){
     isPlaying = false
+    console.log("stopping...")
   }
 
   gameLoop = function(){
-    console.log("looping!")
+    // console.log("looping!")
     if(isPlaying){
       /* This is probably gobbling up memory over time.
       Will possibly casue a stack overflow or memory full runtime error over a
@@ -66,24 +66,45 @@ function Game(){
     }
   }
 
-  outOfBounds = function(actor, proposedDrawX, proposedDrawY){
-      var newTopY = proposedDrawY,
-          newBottomY = proposedDrawY + actor.height,
-          newLeftX = proposedDrawX,
-          newRightX = proposedDrawX + actor.width,
-          arenaTop = 5,
-          arenaBottom = 570,
-          arenaRight = 750,
-          arenaLeft = 65;
-      return newBottomY > arenaBottom ||
-          newTopY < arenaTop ||
-          newRightX > arenaRight ||
-          newLeftX < arenaLeft;
+  isOutOfBounds = function(actor){
+        vector = actor.getVector(),
+        config = actor.getConfig(),
+        newTopY = vector.drawY,
+        newBottomY = vector.drawY + config.height,
+        newLeftX = vector.drawX,
+        newRightX = vector.drawX + config.width,
+        arenaTop = 5,
+        arenaBottom = 570,
+        arenaRight = 750,
+        arenaLeft = 65;
+    if (vector.isUpBtn){
+      newTopY -= vector.speed
+      newBottomY -= vector.speed
+    }
+    if (vector.isRightBtn){
+      newLeftX += vector.speed
+      newRightX += vector.speed
+    }
+    if (vector.isDownBtn){
+      newTopY += vector.speed
+      newBottomY += vector.speed
+    }
+    if (vector.isLeftBtn){
+      newLeftX -= vector.speed
+      newRightX -= vector.speed
+    }
+    return newBottomY > arenaBottom ||
+        newTopY < arenaTop ||
+        newRightX > arenaRight ||
+        newLeftX < arenaLeft;
   }
 
   drawAllPlayers = function(ctx){
     player1 = players[0]
-    player1.update()
+    if (!isOutOfBounds(player1)) {
+      //possible race condition here
+      player1.update()
+    }
     ctxActors.drawImage(textures, player1.getConfig().srcX, player1.getConfig().srcY, player1.getConfig().width, player1.getConfig().height, player1.getPosition().drawX, player1.getPosition().drawY, player1.getConfig().width, player1.getConfig().height)
   }
 
@@ -168,8 +189,7 @@ function Game(){
         button = 'enter'
         e.preventDefault();
         break
-    }
-    // console.log(buttonCode+": ", button)
+    }    
   }
 
 

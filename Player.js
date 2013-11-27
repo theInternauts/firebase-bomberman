@@ -37,6 +37,18 @@ function Player( options ){
     }
   }
 
+  getVector = function(){
+    return {
+      drawX: drawX,
+      drawY: drawY,
+      speed: speed,
+      isUpBtn: isUpBtn,
+      isRightBtn: isRightBtn,
+      isDownBtn: isDownBtn,
+      isLeftBtn: isLeftBtn
+    }
+  }
+
   setButton = function(key, value){
     switch (key) {
       case 'isUpBtn':
@@ -89,6 +101,7 @@ function Player( options ){
   return {
     id:getID,
     getConfig:getConfig,
+    getVector:getVector,
     getPosition:getPosition,
     setButton:setButton,
     update:update,
