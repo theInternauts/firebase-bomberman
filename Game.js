@@ -67,18 +67,18 @@ function Game(){
   }
 
   outOfBounds = function(actor, proposedDrawX, proposedDrawY){
-      var newBottomY = proposedDrawY + actor.height,
-          newTopY = proposedDrawY,
-          newRightX = proposedDrawX + actor.width,
+      var newTopY = proposedDrawY,
+          newBottomY = proposedDrawY + actor.height,
           newLeftX = proposedDrawX,
-          treeLineTop = 5,
-          treeLineBottom = 570,
-          treeLineRight = 750,
-          treeLineLeft = 65;
-      return newBottomY > treeLineBottom ||
-          newTopY < treeLineTop ||
-          newRightX > treeLineRight ||
-          newLeftX < treeLineLeft;
+          newRightX = proposedDrawX + actor.width,
+          arenaTop = 5,
+          arenaBottom = 570,
+          arenaRight = 750,
+          arenaLeft = 65;
+      return newBottomY > arenaBottom ||
+          newTopY < arenaTop ||
+          newRightX > arenaRight ||
+          newLeftX < arenaLeft;
   }
 
   drawAllPlayers = function(ctx){
